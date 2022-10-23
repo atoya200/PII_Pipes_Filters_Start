@@ -10,6 +10,12 @@ namespace CompAndDel
     /// </summary>
     public interface IPicture
     {
+     
+        /// <summary>
+        /// Nombre de la foto. 
+        /// </summary>
+        /// <value>Es el nombre que tendrá cuando se crea</value>
+        string Name {get; set;}
         /// <summary>
         /// Retorna el ancho de la imagen.
         /// </summary>
