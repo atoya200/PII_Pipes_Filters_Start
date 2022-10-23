@@ -11,6 +11,11 @@ namespace CompAndDel
     /// </summary>
     public class Picture : IPicture
     {
+        /// <summary>
+        /// Es el nombre que tendrá la foto luego de pasar por cada filtro en la que se le haga cambio visual
+        /// </summary>
+        /// <value>String que se le pasa como nombre luego de hacerle un filtro</value>
+        public string Name {get; set;}
         private Color[,] colorsMatrix;
 
         /// <summary>

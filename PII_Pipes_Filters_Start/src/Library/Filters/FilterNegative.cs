@@ -15,6 +15,8 @@ namespace CompAndDel.Filters
         public IPicture Filter(IPicture image)
         {
             IPicture result = image.Clone();
+            // Se cambia el nombre de la foto en base al filtro usado
+            result.Name = image.Name + "_Negativa";
 
             for (int x = 0; x < result.Width; x++)
             {
