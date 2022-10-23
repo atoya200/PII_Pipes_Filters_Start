@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CompAndDel;
+using CompAndDel.Filters;
 
 
 namespace CompAndDel.Pipes
@@ -11,6 +12,8 @@ namespace CompAndDel.Pipes
     {
         IPipe next2Pipe;
         IPipe nextPipe;
+
+        private IFilterConditional filterConditional;
         
         /// <summary>
         /// La cañería recibe una imagen, la clona y envìa la original por una cañeria y la clonada por otra.
@@ -22,6 +25,7 @@ namespace CompAndDel.Pipes
         {
             this.next2Pipe = next2Pipe;
             this.nextPipe = nextPipe;           
+            this.filterConditional = new FilterConditinalFace();
         }
         
         /// <summary>
@@ -31,8 +35,17 @@ namespace CompAndDel.Pipes
         /// <param name="picture">imagen a filtrar y enviar a las siguientes cañerías</param>
         public IPicture Send(IPicture picture)
         {
-            next2Pipe.Send(picture.Clone());
-            return this.nextPipe.Send(picture);
+            filterConditional.Filter(picture);
+            IPicture result;
+            if(filterConditional.IsValid == true)
+            {
+                result = nextPipe.Send(picture);
+            }
+            else
+            {
+                result = next2Pipe.Send(picture.Clone());
+            }
+            return result;
         }
     }
 }
