@@ -49,7 +49,7 @@ namespace CompAndDel.Pipes
         {
             
             IPicture result = filterConditional.Filter(picture); ;
-            if(filterConditional.RestulFilter == true)
+            if(filterConditional.ResultFilter == true)
             {
                 result = nextPipe.Send(picture);
             }
