@@ -13,10 +13,17 @@ namespace CompAndDel.Pipes
         IPipe next2Pipe;
         IPipe nextPipe;
 
-        private FilterConditinalFace filterConditional;
+        private IConditionalFilter filterConditional;
 
-        protected string pathImage {get; set;}
 
+
+        /*
+        Por DIP no se podría depender de una clase filtro condicional concreta para la pipe condicional, ya que 
+        si cambia la  clase, obligaría a cambiar a la pipe. Además, como usaría un tipo concreto, si 
+        se quisiera hacer otro filtro condicional en base a otro criterio, tendría que crearse otro pipe.
+        Entonces, aplicando el principio, tendría que crearse una intefaz de la cual dependan las clases de filtro 
+        condicional y esta pipe. 
+        */
           
         /// <summary>
         /// La cañería recibe una imagen, la clona y envìa la original por una cañeria y la clonada por otra.
@@ -24,14 +31,15 @@ namespace CompAndDel.Pipes
         /// <param name="tipoFiltro">Tipo de filtro que se debe aplicar sobre la imagen. Se crea un nuevo filtro con los parametros por defecto</param>
         /// <param name="nextPipe">Siguiente cañeria con filtro</param>
         /// <param name="next2Pipe">Siguiente cañeria sin filtro</param>
-        public PipeForkConditional(IPipe nextPipe, IPipe next2Pipe, string pathName) 
+        public PipeForkConditional(IPipe nextPipe, IPipe next2Pipe, IConditionalFilter tipoFiltro) 
         {
             this.next2Pipe = next2Pipe;
             this.nextPipe = nextPipe;  
-            this.pathImage = pathName;   
-            this.filterConditional = new FilterConditinalFace(pathImage);
+            this.filterConditional = tipoFiltro;
         }
         
+
+      
         /// <summary>
         /// La cañería recibe una imagen, construye un duplicado de la misma, 
         /// y envía la original por una cañería y el duplicado por otra.
@@ -41,7 +49,7 @@ namespace CompAndDel.Pipes
         {
             
             IPicture result = filterConditional.Filter(picture); ;
-            if(filterConditional.IsValid == true)
+            if(filterConditional.RestulFilter == true)
             {
                 result = nextPipe.Send(picture);
             }
