@@ -7,12 +7,19 @@ namespace CompAndDel.Filters
     /// <summary>
     /// Un filtro que recibe una imagen y comprueba si hay una foto o no.
     /// </remarks>
-    public class FilterConditinalFace : IFilterConditional
+    public class FilterConditinalFace : IFilter
     {
         /// Valor lógico de si encuentra o no una cara, el hasFace
         /// </summary>
         /// <value>true o false, si encuentra o no una cara</value>
         public bool IsValid { get; set; }
+
+        protected string pathImage {get; set;}
+
+        public FilterConditinalFace(string pathName)
+        {
+            this.pathImage = pathName;
+        }
 
 
         /// Un filtro que retorna el una imagen sin hacerle nada, pero que establece un valor 
@@ -23,7 +30,7 @@ namespace CompAndDel.Filters
         public IPicture Filter(IPicture image)
         {
             CognitiveFace cog = new CognitiveFace(true, Color.GreenYellow);
-            cog.Recognize(@$"{image.PathImage}");
+            cog.Recognize(@$"{pathImage}");
             IsValid = FoundFace(cog);
             return image;
         }

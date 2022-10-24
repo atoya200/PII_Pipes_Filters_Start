@@ -8,8 +8,14 @@ namespace CompAndDel.Filters
     /// <summary>
     /// Un filtro que recibe una imagen y la retorna en escala de grises.
     /// </remarks>
-    public class FilterPublished : IFilter
+    public class FilterTwitterAPI : IFilter
     {
+        protected string pathImage {get; set;}
+
+        public FilterTwitterAPI(string pathName)
+        {
+            this.pathImage = pathName;
+        }
         /// <summary>
         /// Un filtro que retorna la imagen recibida con un filtro de escala de grises aplicado.
         /// </summary>
@@ -19,7 +25,7 @@ namespace CompAndDel.Filters
         {
             IPicture result = image;
             var twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter(image.Name, @$"{image.PathImage}"));
+            Console.WriteLine(twitter.PublishToTwitter("Foto nueva", @$"{this.pathImage}"));
 
             return result;
         }

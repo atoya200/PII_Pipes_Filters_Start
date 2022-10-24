@@ -11,17 +11,7 @@ namespace CompAndDel
     public interface IPicture
     {
      
-        /// <summary>
-        /// Es la ruta de la imagen, para así no tener que depende de pasar una string
-        /// solo se accede a la propieadad y listo
-        /// </summary>
-        /// <value>La ruta donde esta el archivo img</value>
-        string PathImage {get; }
-        /// <summary>
-        /// Nombre de la foto. 
-        /// </summary>
-        /// <value>Es el nombre que tendrá cuando se crea</value>
-        string Name {get; set;}
+      
         /// <summary>
         /// Retorna el ancho de la imagen.
         /// </summary>
