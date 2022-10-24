@@ -10,12 +10,9 @@ namespace CompAndDel.Filters
     /// </remarks>
     public class FilterTwitterAPI : IFilter
     {
-        protected string pathImage {get; set;}
 
-        public FilterTwitterAPI(string pathName)
-        {
-            this.pathImage = pathName;
-        }
+
+      
         /// <summary>
         /// Un filtro que retorna la imagen recibida con un filtro de escala de grises aplicado.
         /// </summary>
@@ -23,11 +20,10 @@ namespace CompAndDel.Filters
         /// <returns>La imagen recibida pero en escala de grises.</returns>
         public IPicture Filter(IPicture image)
         {
-            IPicture result = image;
+            
             var twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter("Foto nueva", @$"{this.pathImage}"));
-
-            return result;
+            Console.WriteLine(twitter.PublishToTwitter("Mira mi nueva obra de arte crak", @$"../../Imgs/ImagenAPublicar.jpg"));
+            return image;
         }
     }
 }
