@@ -15,7 +15,7 @@ namespace CompAndDel.Filters
         public IPicture Filter(IPicture image)
         {
             PictureProvider provider = new PictureProvider();
-            provider.SavePicture(image, @$"../../Imgs/{image.Name}.jpg");
+           provider.SavePicture(image, image.PathImage);
             return image;
         }
     }

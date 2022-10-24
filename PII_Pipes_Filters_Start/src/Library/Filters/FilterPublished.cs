@@ -19,7 +19,7 @@ namespace CompAndDel.Filters
         {
             IPicture result = image;
             var twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter(image.Name, @$"../..//Imgs/{image.Name}.jpg"));
+            Console.WriteLine(twitter.PublishToTwitter(image.Name, @$"{image.PathImage}"));
 
             return result;
         }

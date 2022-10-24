@@ -35,8 +35,8 @@ namespace CompAndDel.Pipes
         /// <param name="picture">imagen a filtrar y enviar a las siguientes cañerías</param>
         public IPicture Send(IPicture picture)
         {
-            filterConditional.Filter(picture);
-            IPicture result;
+            
+            IPicture result = filterConditional.Filter(picture); ;
             if(filterConditional.IsValid == true)
             {
                 result = nextPipe.Send(picture);
@@ -44,6 +44,7 @@ namespace CompAndDel.Pipes
             else
             {
                 result = next2Pipe.Send(picture.Clone());
+                result.Name = picture.Name;
             }
             return result;
         }
