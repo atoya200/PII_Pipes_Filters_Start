@@ -8,9 +8,7 @@ namespace CompAndDel
     {
         static void Main(string[] args)
         {
-            //Ruta general de donde tener la imagen, para poder revisar si tiene cara o no
-            // y para publicarlo
-            string pathImage = "../../Imgs/ImagenModificada.jp";
+            
             // Ejercicio 1
             PictureProvider provider = new PictureProvider();
             IPicture picture = provider.GetPicture(@"../../Imgs/luke.jpg");
@@ -25,7 +23,8 @@ namespace CompAndDel
             provider.SavePicture(newImage, @"../../Imgs/NuevaImagen.jpg");
 
             //Ejercicio 2   
-            IFilter filtroGuardar = new Filters.FilterSave();
+            FilterSave filtroGuardar = new FilterSave();
+            filtroGuardar.NamePhoto = "beer";
             IPipe pipeSerial6 = new PipeSerial(filtroGuardar, pipeNull);
             IPipe pipeSerial5 = new PipeSerial(filtroNegativo, pipeSerial6);
             IPipe pipeSerial4 = new PipeSerial(filtroGuardar, pipeSerial5);
@@ -36,7 +35,8 @@ namespace CompAndDel
 
 
             ///Ejercicio 3
-            Filters.FilterTwitterAPI filtroPublicar = new Filters.FilterTwitterAPI(pathImage);
+            filtroGuardar.NamePhoto = "MujereSonriente";
+            IFilter filtroPublicar = new FilterTwitterAPI();
             IPipe pipeSerial12 = new PipeSerial(filtroPublicar, pipeNull);
             IPipe pipeSerial11 = new PipeSerial(filtroGuardar, pipeSerial12);
             IPipe pipeSerial10 = new PipeSerial(filtroNegativo, pipeSerial11);
@@ -44,27 +44,32 @@ namespace CompAndDel
             IPipe pipeSerial8 = new PipeSerial(filtroGuardar, pipeSerial9);
             IPipe pipeSerial7 = new PipeSerial(filtroGrises, pipeSerial8);
             // Ahora se realiza realmente la aplicación de filtros y demás. 
-            IPicture picture3 = provider.GetPicture(@"../../Imgs/HombreSonriente.jpg");
+            IPicture picture3 = provider.GetPicture(@"../../Imgs/MujerSonriente.jpg");
             pipeSerial7.Send(picture3);
+            
 
             // Ejercicio 4
             // Caso en el que no hay un rostro
             IPicture picture4 = provider.GetPicture(@"../../Imgs/Leopardo.jpg");
             // Caso en el que si hay una cara
             IPicture picture5 = provider.GetPicture(@"../../Imgs/MujerSonriente.jpg");
+            //Filtros
+            IConditionalFilter filtroCondional = new ConditionalFilterFace();
             // Tuberías
             IPipe pipeSerial17 = new PipeSerial(filtroGuardar, pipeNull);
             IPipe pipeSerial16 = new PipeSerial(filtroNegativo, pipeSerial17);
             IPipe pipeSerial15 = new PipeSerial(filtroPublicar, pipeNull);
-            IPipe pipeFork = new PipeForkConditional(pipeSerial15, pipeSerial16, pathImage);
+            IPipe pipeFork = new PipeForkConditional(pipeSerial15, pipeSerial16, filtroCondional);
             IPipe pipeSerial14 = new PipeSerial(filtroGuardar, pipeFork);
             IPipe pipeSerial13 = new PipeSerial(filtroGrises, pipeSerial14);
 
             // Caso en el que si hay una cara
             IPicture newImage3 = pipeSerial13.Send(picture5);
+            filtroGuardar.NamePhoto = "MujereSonriente";
             // Caso en el que no hay un rostro
+            filtroGuardar.NamePhoto = "MujereSonriente";
             IPicture newImage2 = pipeSerial13.Send(picture4);
-
+            
 
         }
     }
