@@ -47,20 +47,27 @@ namespace CompAndDel
             pipeSerial7.Send(picture3); 
 
             // Ejercicio 4
-            PipeSerial pipeSerial15 = new PipeSerial(filtroNegativo, pipeNull);
-            PipeSerial pipeSerial14 = new PipeSerial(filtroPublicar, pipeNull);
-            PipeFork pipeFork = new PipeFork(pipeSerial14, pipeSerial15);
-            PipeSerial pipeSerial13 = new PipeSerial(filtroGrises, pipeFork);
             // Caso en el que no hay un rostro
             IPicture picture4 = provider.GetPicture(@"../../Imgs/Leopardo.jpg");
             picture4.Name = "Leopardo";
-            IPicture newImage2 = pipeSerial13.Send(picture4);
-            provider.SavePicture(newImage2, @"../../Imgs/NuevaImagen2.jpg");
             // Caso en el que si hay una cara
             IPicture picture5 = provider.GetPicture(@"../../Imgs/MujerSonriente.jpg");
             picture5.Name = "Doña";
+            // Tuberías
+            PipeSerial pipeSerial17 = new PipeSerial(filtroGuardar, pipeNull);
+            PipeSerial pipeSerial16 = new PipeSerial(filtroNegativo, pipeSerial17);
+            PipeSerial pipeSerial15 = new PipeSerial(filtroPublicar, pipeNull);
+            PipeFork pipeFork = new PipeFork(pipeSerial15, pipeSerial16);
+            PipeSerial pipeSerial14 = new PipeSerial(filtroGuardar, pipeFork);
+            PipeSerial pipeSerial13 = new PipeSerial(filtroGrises, pipeSerial14);
+            
+            // Caso en el que si hay una cara
             IPicture newImage3 = pipeSerial13.Send(picture5);
-            provider.SavePicture(newImage3, @"../../Imgs/NuevaImagen3.jpg");
+            provider.SavePicture(newImage3, @$"{newImage3.PathImage}");
+            // Caso en el que no hay un rostro
+            IPicture newImage2 = pipeSerial13.Send(picture4);
+            provider.SavePicture(newImage2, @$"{newImage2.PathImage}");
+            
             
         }
     }
