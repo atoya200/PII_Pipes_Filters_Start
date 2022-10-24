@@ -23,7 +23,7 @@ namespace CompAndDel.Filters
         public IPicture Filter(IPicture image)
         {
             CognitiveFace cog = new CognitiveFace(true, Color.GreenYellow);
-            cog.Recognize(@"bill.jpg");
+            cog.Recognize(@$"{image.PathImage}");
             IsValid = FoundFace(cog);
             return image;
         }
