@@ -17,14 +17,14 @@ namespace CompAndDel
         public IPicture GetPicture(string path)
         {
             Picture picture = new Picture(1, 1);
-            using (var image = Image.Load(path))
+            using (var image = Image.Load<Rgba32>(path))
             {
                 picture.Resize(image.Width, image.Height);
                 for (int h = 0; h < image.Height; h++)
                 {
                     for (int w = 0; w <image.Width; w++)
                     {
-                        picture.SetColor(w, h, Color.FromArgb(image[w, h].A, image[w, h].R, image[w, h].G, image[w, h].B));
+                        picture.SetColor(w, h, System.Drawing.Color.FromArgb(image[w, h].A, image[w, h].R, image[w, h].G, image[w, h].B));
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace CompAndDel
                 {
                     for (int w = 0; w < picture.Width; w++)
                     {
-                        Color c = picture.GetColor(w, h);
+                        System.Drawing.Color c = picture.GetColor(w, h);
                         image[w, h] = new Rgba32(c.R, c.G, c.B, c.A);
                     }
                 }
