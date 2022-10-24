@@ -16,7 +16,7 @@ namespace CompAndDel
         /// solo se accede a la propieadad y listo
         /// </summary>
         /// <value>La ruta donde esta el archivo img</value>
-        string path {get; set;}
+        string PathImage {get; }
         /// <summary>
         /// Nombre de la foto. 
         /// </summary>

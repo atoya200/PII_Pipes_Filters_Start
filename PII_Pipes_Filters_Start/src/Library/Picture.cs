@@ -11,6 +11,12 @@ namespace CompAndDel
     /// </summary>
     public class Picture : IPicture
     {
+        public string PathImage {
+            get
+            {
+                return   @$"../../Imgs/{this.Name}.jpg";
+            }
+            }
         /// <summary>
         /// Es el nombre que tendrá la foto luego de pasar por cada filtro en la que se le haga cambio visual
         /// </summary>
